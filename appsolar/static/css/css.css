@@ -15,12 +15,6 @@ body {
     justify-content: right;
 }
 
-img {
-    opacity: 0.3;
-    width: 100%;
-    height: 400px;
-}
-
 
 .jumbotron {
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("../images/painel_solar.jpg");
@@ -28,12 +22,16 @@ img {
     -moz-background-size: 100% 100%;
     -o-background-size: 100% 100%;
     background-size: 100% 100%;    
-    color: white;
-    
+    color: white;    
 }
 
 .jumbotron h1 {
     font-size: 100px;
     font-weight: bolder;
+}
+
+.landing-page-image {
+    width: 100%;
+    height: 100%;
 }
 
