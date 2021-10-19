@@ -10,7 +10,33 @@ Home
         <h2 class="lead">App to calculate in a simple and fast way your solar energy projects</h2>
         <hr class="my-4">
         <p class="lead">
-          <a class="btn btn-primary btn-lg" href="#" role="button">Start here</a>
+          <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#loginModal">Start here</a>
+          <div id="loginModal" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="background-color: #212121;">
+               <div class="modal-content" style="background-color: #212121;">
+                  <div class="modal-header" style="background-color: #212121;">
+                     <h4 class="modal-title">Login</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form action="" method="POST"> 
+                        <div class="form-group">
+                           <label>Username:</label>
+                           <input type="text" class="form-control" name="name" required="1">
+                        </div> 
+                         <div class="form-group">
+                           <label>Password:</label>
+                           <input type="email" class="form-control" name="email" required="1"> 
+                        </div>                         
+                        <div class="form-group">
+                           <button class="btn btn-primary" type="submit">Login</button> 
+                        </div> 
+                     </form> 
+                </div>
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                </div>
+            </div>
+        </div>
         </p>
     </div>    
 </div>

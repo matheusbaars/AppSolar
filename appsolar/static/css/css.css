@@ -3,17 +3,30 @@ body {
     color: white;
 }
 
-#register {
-    color: violet;
+#home {
+    color: white;
     text-align: right;
     justify-content: right;
 }
 
-#login {
-    color: violet;
+#home:hover {
+    color: rgba(9, 238, 112, 0.986);
     text-align: right;
     justify-content: right;
 }
+
+#aboutus {
+    color: white;
+    text-align: right;
+    justify-content: right;
+}
+
+#aboutus:hover {
+    color: rgba(9, 238, 112, 0.986);
+    text-align: right;
+    justify-content: right;
+}
+
 
 
 .jumbotron {
