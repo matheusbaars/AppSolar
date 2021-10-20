@@ -25,4 +25,33 @@ class User(db.Model):
     password_hash = db.Column(db.String(length=60), nullable=False)
 
 
+class Module(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    manufacture = db.Column(db.String(length=50), nullable=False)
+    coefTempVoc = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    tempOpNom = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    coefTempPmax = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    pmax = db.Column(db.Integer, nullable=False)
+    tolerancia = db.Column(db.Float(precision=2, asdecimal=True))
+    vma = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    ima = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    voc = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    isc = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    eficiencia = db.Column(db.Float(precision=2, asdecimal=True))
+
+    def __init__(self, manufacture, coefTempVoc,tempOpNom, coefTempPmax, pmax, tolerancia, vma, ima, voc, isc, eficiencia):
+        self.manufacture = manufacture
+        self.coefTempVoc = coefTempVoc
+        self.tempOpNom = tempOpNom
+        self.coefTempPmax = coefTempPmax
+        self.pmax = pmax
+        self.tolerancia = tolerancia
+        self.vma = vma
+        self.ima = ima
+        self.voc = voc
+        self.isc = isc
+        self.eficiencia = eficiencia
+        
+        
+
 

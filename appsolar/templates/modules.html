@@ -26,99 +26,79 @@ Clients Page
         <thead>
           <tr>
             <th scope="col">id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Adress</th>
-            <th scope="col">Action</th>
+            <th scope="col">Manufacture</th>
+            <th scope="col">Pmax (W)</th>
+            <th scope="col">Efficiency (%)</th>            
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-        {% for client in clients %}
+        {% for module in modules %}
           <tr>
-            <th scope="row">{{ client.id }}</th>
-            <td>{{ client.name }}</td>
-            <td>{{ client.surname }}</td>
-            <td>{{ client.email }}</td>
-            <td>{{ client.phone }}</td>
-            <td>{{ client.adress }}</td>
+            <th scope="row">{{ module.id }}</th>
+            <td>{{ module.manufacture }}</td>
+            <td>{{ module.pmax }}</td>
+            <td>{{ module.eficiencia }}</td>
             <td>
-                <a href="/update/{{ client.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalclient{{ client.id }}">Edit</a>
-                <a href="/delete/{{ client.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ client.name }} {{ client.surname }}?')">Delete</a>
+                <a href="/update/{{ module.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalclient{{ module.id }}">Edit</a>
+                <a href="/deletemodule/{{ module.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ module.manufacture }} {{ module.pmax }}W?')">Delete</a>
             </td>
           </tr>
-          <div id="editmodalclient{{ client.id }}" class="modal fade" role="dialog">
-            <div class="modal-dialog" style="background-color: #212121;">
-               <div class="modal-content" style="background-color: #212121;">
-                  <div class="modal-header" style="background-color: #212121;">
-                     <h4 class="modal-title" style="color: white;">Update Client</h4>
-                  </div>
-                  <div class="modal-body">
-                     <form action="{{ url_for('update') }}" method="POST"> 
-                        <div class="form-group">
-                          <input type="hidden" name="id" value="{{ client.id }}">
-                           <input type="text" class="form-control" name="name" value="{{ client.name }}">
-                        </div> 
-                         <div class="form-group">
-                           <input type="text" class="form-control" name="surname" value="{{ client.surname }}"> 
-                        </div>
-                        <div class="form-group">
-                          <input type="text" class="form-control" name="email" value="{{ client.email }}"> 
-                       </div>
-                       <div class="form-group">
-                        <input type="number" class="form-control" name="phone" value="{{ client.phone }}"> 
-                     </div>
-                     <div class="form-group">
-                      <input type="text" class="form-control" name="adress" value="{{ client.adress }}"> 
-                   </div>                         
-                        <div class="form-group">
-                           <button class="btn btn-primary" type="submit">Update Client</button> 
-                        </div>
-                     </form> 
-                </div>
-                <div class="modal-footer"> 
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
-                </div>
-            </div>
-          </div>   
         </tbody>
         {% endfor %}
       </table>
     <hr class="my-4">
     <p class="lead">
         <br>
-      <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#addclientmodal">Add New Client</a>
-      <div id="addclientmodal" class="modal fade" role="dialog">
+      <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#addmodulemodal">Add New Module</a>
+      <div id="addmodulemodal" class="modal fade" role="dialog">
         <div class="modal-dialog" style="background-color: #212121;">
            <div class="modal-content" style="background-color: #212121;">
               <div class="modal-header" style="background-color: #212121;">
-                 <h4 class="modal-title" style="color: white;">Add new Client</h4>
+                 <h4 class="modal-title" style="color: white;">Add new Module</h4>
               </div>
               <div class="modal-body">
-                 <form action="{{ url_for('insert') }}" method="POST"> 
+                 <form action="{{ url_for('insertmodules') }}" method="POST"> 
                     <div class="form-group">
-                       <input type="text" class="form-control" name="name" required="1" placeholder="Name">
+                       <input type="text" class="form-control" name="manufacture" required="1" placeholder="Manufacture">
                     </div> 
-                     <div class="form-group">
-                       <input type="text" class="form-control" name="surname" required="1" placeholder="Last Name"> 
-                    </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" name="email" required="1" placeholder="Email"> 
-                   </div>
+                        <input type="number" step=0.01 class="form-control" name="coefTempVoc" required="1" placeholder="Coeficient of temperature Voc"> 
+                     </div>                    
                    <div class="form-group">
-                    <input type="number" class="form-control" name="phone" required="1" placeholder="Phone"> 
+                    <input type="number" step=0.01 class="form-control" name="tempOpNom" required="1" placeholder="Nominal Operation temperature"> 
                  </div>
-                 <div class="form-group">
-                  <input type="text" class="form-control" name="adress" required="1" placeholder="Adress"> 
-               </div>                         
+                <div class="form-group">
+                  <input type="number" step=0.01 class="form-control" name="coefTempPmax" required="1" placeholder="Temperature Coeficient of Pmax"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" class="form-control" name="pmax" required="1" placeholder="Pmax"> 
+                 </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="tolerancia" required="1" placeholder="Tolerance"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="vma" required="1" placeholder="Vm (A)"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="ima" required="1" placeholder="Im (A)"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="voc" required="1" placeholder="Voc"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="isc" required="1" placeholder="Isc"> 
+                </div>
+                <div class="form-group">
+                    <input type="number" step=0.01 class="form-control" name="eficiencia" required="1" placeholder="Efficiency"> 
+                </div>              
                     <div class="form-group">
-                       <button class="btn btn-primary" type="submit">Add Client</button> 
+                       <button class="btn btn-primary" type="submit">Add Module</button> 
                     </div>
                  </form> 
             </div>
             <div class="modal-footer"> 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
             </div>
         </div>
       </div>

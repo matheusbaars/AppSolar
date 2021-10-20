@@ -1,6 +1,6 @@
 from appsolar import app
 from flask import render_template, url_for, request, url_for, flash, redirect
-from appsolar.models import Client
+from appsolar.models import Client, Module, User
 from appsolar import db
 
 @app.route('/')
@@ -67,6 +67,37 @@ def simple_calculator():
 ####################MODULES########################
 @app.route('/modules')
 def modules():
+    modules = Module.query.all()
+    return render_template('modules.html', modules=modules)
+
+@app.route('/insertmodules', methods=['POST'])
+def insertmodules():
+    if request.method == 'POST':
+        manufacture = request.form['manufacture']
+        pmax = request.form['pmax']
+        coefTempVoc = request.form['coefTempVoc']
+        tempOpNom = request.form['tempOpNom']
+        coefTempPmax = request.form['coefTempPmax']
+        tolerancia = request.form['tolerancia']
+        vma = request.form['vma']
+        ima = request.form['ima']
+        voc = request.form['voc']
+        isc = request.form['isc']
+        eficiencia = request.form['eficiencia']
+            
+        data = Module(manufacture, coefTempVoc, tempOpNom, coefTempPmax, pmax, tolerancia, vma, ima, voc, isc, eficiencia)
+        db.session.add(data)
+        db.session.commit()
+        flash('Module added successfully')
+        return redirect(url_for('modules'))
     return render_template('modules.html')
+
+@app.route('/deletemodule/<id>')
+def deletemodule(id):
+    module = Module.query.get(id)
+    db.session.delete(module)
+    db.session.commit()
+    flash('Module deleted successfully')
+    return redirect(url_for('modules'))
 ####################MODULES########################
 
