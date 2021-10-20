@@ -8,6 +8,7 @@ from appsolar import db
 def landing_page():
     return render_template('landing.html')
 
+####################CLIENTS########################
 @app.route('/register')
 def register():
     return render_template('register.html')
@@ -55,4 +56,17 @@ def update():
         db.session.commit()
         flash('Client update successfully')
         return redirect(url_for('clients'))
+####################CLIENTS########################
+
+####################Simple Calculator##############
+@app.route('/simplecalculator')
+def simple_calculator():
+    return render_template('simpleCalculator.html')
+####################Simple Calculator##############
+
+####################MODULES########################
+@app.route('/modules')
+def modules():
+    return render_template('modules.html')
+####################MODULES########################
 
