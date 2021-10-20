@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}
+Clients Page
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div class="jumbotron text-center" id="jumbotron-clients">
+    <h3 class="display-4">Clients List</h3>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{ message }}
+    </div>
+    
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Adress</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for client in clients %}
+          <tr>
+            <th scope="row">{{ client.id }}</th>
+            <td>{{ client.name }}</td>
+            <td>{{ client.surname }}</td>
+            <td>{{ client.email }}</td>
+            <td>{{ client.phone }}</td>
+            <td>{{ client.adress }}</td>
+            <td>
+                <a href="/update/{{ client.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalclient{{ client.id }}">Edit</a>
+                <a href="/delete/{{ client.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ client.name }} {{ client.surname }}?')">Delete</a>
+            </td>
+          </tr>
+          <div id="editmodalclient{{ client.id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="background-color: #212121;">
+               <div class="modal-content" style="background-color: #212121;">
+                  <div class="modal-header" style="background-color: #212121;">
+                     <h4 class="modal-title" style="color: white;">Update Client</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form action="{{ url_for('update') }}" method="POST"> 
+                        <div class="form-group">
+                          <input type="hidden" name="id" value="{{ client.id }}">
+                           <input type="text" class="form-control" name="name" value="{{ client.name }}">
+                        </div> 
+                         <div class="form-group">
+                           <input type="text" class="form-control" name="surname" value="{{ client.surname }}"> 
+                        </div>
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="email" value="{{ client.email }}"> 
+                       </div>
+                       <div class="form-group">
+                        <input type="number" class="form-control" name="phone" value="{{ client.phone }}"> 
+                     </div>
+                     <div class="form-group">
+                      <input type="text" class="form-control" name="adress" value="{{ client.adress }}"> 
+                   </div>                         
+                        <div class="form-group">
+                           <button class="btn btn-primary" type="submit">Update Client</button> 
+                        </div>
+                     </form> 
+                </div>
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                </div>
+            </div>
+          </div>   
+        </tbody>
+        {% endfor %}
+      </table>
+    <hr class="my-4">
+    <p class="lead">
+        <br>
+      <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#addclientmodal">Add New Client</a>
+      <div id="addclientmodal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="background-color: #212121;">
+           <div class="modal-content" style="background-color: #212121;">
+              <div class="modal-header" style="background-color: #212121;">
+                 <h4 class="modal-title" style="color: white;">Add new Client</h4>
+              </div>
+              <div class="modal-body">
+                 <form action="{{ url_for('insert') }}" method="POST"> 
+                    <div class="form-group">
+                       <input type="text" class="form-control" name="name" required="1" placeholder="Name">
+                    </div> 
+                     <div class="form-group">
+                       <input type="text" class="form-control" name="surname" required="1" placeholder="Last Name"> 
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" name="email" required="1" placeholder="Email"> 
+                   </div>
+                   <div class="form-group">
+                    <input type="number" class="form-control" name="phone" required="1" placeholder="Phone"> 
+                 </div>
+                 <div class="form-group">
+                  <input type="text" class="form-control" name="adress" required="1" placeholder="Adress"> 
+               </div>                         
+                    <div class="form-group">
+                       <button class="btn btn-primary" type="submit">Add Client</button> 
+                    </div>
+                 </form> 
+            </div>
+            <div class="modal-footer"> 
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+            </div>
+        </div>
+      </div>
+    </p>
+  </div>
+
+{% endblock %}

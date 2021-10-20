@@ -1,8 +1,7 @@
-from enum import unique
 from appsolar import db
 
 class Client(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(length=50), nullable=False)
     surname = db.Column(db.String(length=100))
     email = db.Column(db.String(length=100), unique=True, nullable=False)
@@ -18,6 +17,12 @@ class Client(db.Model):
 
     def __repr__(self):
         return f'Name {self.name}'
+
+class User(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    username = db.Column(db.String(length=30), unique=True, nullable=False)
+    email_adress = db.Column(db.String(length=50),nullable=False, unique=True)
+    password_hash = db.Column(db.String(length=60), nullable=False)
 
 
 
