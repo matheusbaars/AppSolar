@@ -40,10 +40,56 @@ Clients Page
             <td>{{ module.pmax }}</td>
             <td>{{ module.eficiencia }}</td>
             <td>
-                <a href="/update/{{ module.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalclient{{ module.id }}">Edit</a>
+                <a href="/updatemodule/{{ module.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalmodule{{ module.id }}">Edit</a>
                 <a href="/deletemodule/{{ module.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ module.manufacture }} {{ module.pmax }}W?')">Delete</a>
             </td>
           </tr>
+          <div id="editmodalmodule{{ module.id }}" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="background-color: #212121;">
+               <div class="modal-content" style="background-color: #212121;">
+                  <div class="modal-header" style="background-color: #212121;">
+                     <h4 class="modal-title" style="color: white;">Update Module</h4>
+                  </div>
+                  <div class="modal-body">
+                     <form action="{{ url_for('updatemodule') }}" method="POST"> 
+                        <div class="form-group">
+                          <input type="hidden" name="id" value="{{ module.id }}">
+                           <input type="text" class="form-control" name="manufacture" value="{{ module.manufacture }}">
+                        </div> 
+                         <div class="form-group">
+                           <input type="number" step=0.01 class="form-control" name="coefTempVoc" value="{{ module.coefTempVoc }}"> 
+                        </div>
+                        <div class="form-group">
+                          <input type="number" step=0.01 class="form-control" name="tempOpNom" value="{{ module.tempOpNom }}"> 
+                       </div>
+                       <div class="form-group">
+                        <input type="number" step=0.01 class="form-control" name="pmax" value="{{ module.pmax }}"> 
+                     </div>
+                    <div class="form-group">
+                      <input type="number" step=0.01 class="form-control" name="tolerancia" value="{{ module.tolerancia }}"> 
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step=0.01 class="form-control" name="vma" value="{{ module.vma }}"> 
+                      </div>
+                      <div class="form-group">
+                      <input type="number" step=0.01 class="form-control" name="ima" value="{{ module.ima }}"> 
+                    </div>
+                    <div class="form-group">
+                        <input type="number" step=0.01 class="form-control" name="isc" value="{{ module.isc }}"> 
+                    </div>   
+                    <div class="form-group">
+                        <input type="number" step=0.01 class="form-control" name="eficiencia" value="{{ module.eficiencia }}"> 
+                    </div>                   
+                        <div class="form-group">
+                           <button class="btn btn-primary" type="submit">Update Module</button> 
+                        </div>
+                     </form> 
+                </div>
+                <div class="modal-footer"> 
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button> 
+                </div>
+            </div>
+          </div>   
         </tbody>
         {% endfor %}
       </table>

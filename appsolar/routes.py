@@ -99,5 +99,25 @@ def deletemodule(id):
     db.session.commit()
     flash('Module deleted successfully')
     return redirect(url_for('modules'))
+
+@app.route('/updatemodule', methods=['GET', 'POST'])
+def updatemodule():
+    
+    if request.method == 'POST':
+        data = Module.query.get(request.form.get('id'))
+        data.manufacture = request.form['manufacture']
+        data.coefTempVoc = request.form['coefTempVoc']
+        data.tempOpNom = request.form['tempOpNom']
+        data.pmax = request.form['pmax']
+        data.tolerancia = request.form['tolerancia']
+        data.vma = request.form['vma']
+        data.ima = request.form['ima']
+        data.isc = request.form['isc']
+        data.eficiencia = request.form['eficiencia']
+
+        db.session.commit()
+        flash('Module update successfully')
+        return redirect(url_for('modules'))
+    return render_template('modules.html')
 ####################MODULES########################
 
