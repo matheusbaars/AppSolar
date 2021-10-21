@@ -7,6 +7,8 @@ def costOfDisponibility(cost):
         return 100
     elif cost == 'None':
         return 0
+    else:
+        return 0
 
 def monthlyEnergyConsumedLessCostDisponibility(energy, costOfDisponibility):
     return int(energy) - int(costOfDisponibility)
