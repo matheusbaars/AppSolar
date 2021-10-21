@@ -2,6 +2,7 @@ from appsolar import app
 from flask import render_template, url_for, request, url_for, flash, redirect
 from appsolar.models import Client, Module, User
 from appsolar import db
+from appsolar.functions import *
 
 @app.route('/')
 @app.route('/home')
@@ -62,6 +63,15 @@ def update():
 @app.route('/simplecalculator')
 def simple_calculator():
     return render_template('simpleCalculator.html')
+
+@app.route('/simplecalculate', methods=['POST'])
+def simplecalculate():
+    meanconsume = request.form['meanconsume']
+    custodisponibilidade = request.form['custodisponibilidade']
+    custodisponibilidade = costOfDisponibility(custodisponibilidade)
+    net_energy = monthlyEnergyConsumedLessCostDisponibility(meanconsume, custodisponibilidade)
+    net_energy_per_day = net_energy / 30
+    return f'Calculado{net_energy_per_day}'
 ####################Simple Calculator##############
 
 ####################MODULES########################
