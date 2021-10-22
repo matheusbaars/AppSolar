@@ -51,7 +51,37 @@ class Module(db.Model):
         self.voc = voc
         self.isc = isc
         self.eficiencia = eficiencia
-        
-        
 
+class Irradiacao(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    irr_cidade = db.Column(db.String(length=50),nullable=False, unique=True)
+    irr_janeiro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_fevereiro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_março = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_abril = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_maio = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_junho = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_julho = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_agosto = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_setembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_outubro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_novembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_dezembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    irr_media = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
 
+    def __init__(self, irr_cidade, irr_janeiro, irr_fevereiro, irr_março, irr_abril, irr_maio, irr_junho, irr_julho, irr_agosto, irr_setembro, irr_outubro, irr_novembro, irr_dezembro, irr_media):
+        self.irr_cidade = irr_cidade
+        self.irr_janeiro = irr_janeiro
+        self.irr_fevereiro = irr_fevereiro
+        self.irr_março = irr_março
+        self.irr_abril = irr_abril
+        self.irr_maio = irr_maio
+        self.irr_junho = irr_junho
+        self.irr_julho = irr_julho
+        self.irr_agosto = irr_agosto
+        self.irr_setembro = irr_setembro
+        self.irr_outubro = irr_outubro
+        self.irr_novembro = irr_novembro
+        self.irr_dezembro = irr_dezembro
+        self.irr_media = irr_media
+        

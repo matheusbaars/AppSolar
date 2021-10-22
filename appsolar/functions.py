@@ -1,3 +1,6 @@
+from json import dumps
+from sqlalchemy.orm import class_mapper
+
 def costOfDisponibility(cost):
     if cost == 'Monophasic':
         return 30
@@ -12,3 +15,9 @@ def costOfDisponibility(cost):
 
 def monthlyEnergyConsumedLessCostDisponibility(energy, costOfDisponibility):
     return int(energy) - int(costOfDisponibility)
+
+def number_of_modules(net_energy_per_day, modulePower):
+    pass
+
+
+

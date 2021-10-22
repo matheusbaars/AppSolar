@@ -25,25 +25,30 @@ Clients Page
     <form action="{{ url_for('simplecalculate') }}" method="POST">
         <div class="form-group">
             <input type="number" step=0.01 class="form-control" name="meanconsume" required="1" placeholder="Mean consume">
-        </div>        
-        <select id="inputState" class="form-control" name='custodisponibilidade'>
+        </div> 
+        <div class="form-group">  
+        <select id="inputCost" class="form-control" name='custodisponibilidade'>
             <option selected>Select cost of disponibility</option>
             <option>None</option>
             <option>Monophasic</option>
             <option>Biphasic</option>
             <option>Triphasic</option>
         </select>
+        </div>
+        <div class="form-group">            
+                            
+        <select id="inputModule" class="form-control" name='modules'>
+            <option selected>Select module power</option>                
+            {% for module in modules %}          
+                <option>{{ module.manufacture }} {{ module.pmax }}W {{ module.id }}</option>  
+                <!--<input type="hidden" name="id-module" value="{{ module.id }}">-->                                                  
+            {% endfor %}           
+        </select>
+        </div>
         <br>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Calculate</button> 
         </div>
     </form>
-      
-    
-    <!--<p class="lead">
-        <br>
-      <a class="btn btn-primary btn-lg" href="#" role="button" data-toggle="modal" data-target="#calculate">Calculate</a>
-    </p>-->
-    
     </div>   
 {% endblock %}
