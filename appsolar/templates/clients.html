@@ -46,7 +46,9 @@ Clients Page
             <td>{{ client.adress }}</td>
             <td>
                 <a href="/update/{{ client.id }}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#editmodalclient{{ client.id }}">Edit</a>
-                <a href="/delete/{{ client.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ client.name }} {{ client.surname }}?')">Delete</a>
+                <a href="/delete/{{ client.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete {{ client.name }} {{ client.surname }}?')">Delete</a>               
+                <a href="#" class="btn btn-primary btn-xs">Full Calculator</a>
+
             </td>
           </tr>
           <div id="editmodalclient{{ client.id }}" class="modal fade" role="dialog">

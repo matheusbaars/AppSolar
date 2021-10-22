@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Clients Page
+Simple Calculator Page
 {% endblock %}
 
 {% block content %}
@@ -35,8 +35,7 @@ Clients Page
             <option>Triphasic</option>
         </select>
         </div>
-        <div class="form-group">            
-                            
+        <div class="form-group">                           
         <select id="inputModule" class="form-control" name='modules'>
             <option selected>Select module power</option>                
             {% for module in modules %}          
@@ -45,6 +44,14 @@ Clients Page
             {% endfor %}           
         </select>
         </div>
+        <div class="form-group">                           
+            <select id="inputIrradiation" class="form-control" name='irradiation'>
+                <option selected>Select City irradiation</option>                
+                {% for irradiation in irradiations %}          
+                    <option>{{ irradiation.irr_cidade }} {{ irradiation.id }}</option>                                                                      
+                {% endfor %}           
+            </select>
+            </div>
         <br>
         <div class="form-group">
             <button class="btn btn-primary" type="submit">Calculate</button> 

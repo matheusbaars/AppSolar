@@ -65,24 +65,29 @@ def update():
 @app.route('/simplecalculator')
 def simple_calculator():
     modules = Module.query.all()
-    return render_template('simpleCalculator.html', modules=modules)
+    irradiations = Irradiacao.query.all()
+    return render_template('simpleCalculator.html',  irradiations=irradiations, modules=modules)
 
 @app.route('/simplecalculate', methods=['GET', 'POST'])
 def simplecalculate():
     meanconsume = request.form['meanconsume']
     custodisponibilidade = request.form['custodisponibilidade']
     module_data = request.form['modules']
-
+    irradiation_data = request.form['irradiation']
     #for key, value in request.form.items():
     #    print("key: {0}, value: {1}".format(key, value))
     id = module_data[-1]
+    id_irr = irradiation_data[-1]    
     module_data = Module.query.filter_by(id=id).first()
-    
-    
+    irradiation_data = Irradiacao.query.filter_by(id=id_irr).first()
     custodisponibilidade = costOfDisponibility(custodisponibilidade)
     net_energy = monthlyEnergyConsumedLessCostDisponibility(meanconsume, custodisponibilidade)
     net_energy_per_day = net_energy / 30
-    return f'Calculado{net_energy_per_day} | {module_data.pmax}'
+    power_peak = net_energy_per_day / float(irradiation_data.irr_media)
+    number_modules = power_peak * 1000 / float(module_data.pmax)
+    #return f'Peak power = {power_peak}kWp | {number_modules} modules.'
+    return render_template('results_simple_calculator.html', number_modules=number_modules, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak, module_data=module_data, irradiation_data=irradiation_data)
+    #return render_template('simpleCalculator.html', number_modules=number_modules, pmax=module_data.pmax, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak)
 ####################Simple Calculator##############
 
 ####################MODULES########################
