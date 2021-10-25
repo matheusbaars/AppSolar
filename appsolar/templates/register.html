@@ -7,9 +7,9 @@ Registration Page
 <br>
 <br>
 <div class="jumbotron text-center" id="jumbotron-clients">
-    <h3 class="display-4">Registration</h3>
+    <h3 class="display-4">Please Create your Account</h3>
     
-    {% with messages = get_flashed_messages() %}
+    <!--{% with messages = get_flashed_messages() %}
     {% if messages %}
     {% for message in messages %}
     <div class="alert alert-success alert-dismissable" role="alert">
@@ -21,12 +21,12 @@ Registration Page
     
     {% endfor %}
     {% endif %}
-    {% endwith %}
+    {% endwith %}-->
     
     <hr class="my-4">
     <p class="lead">
         <br>
-        <form>
+        <!--<form>
             <div class="form-group">              
               <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">              
             </div>
@@ -40,7 +40,20 @@ Registration Page
                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
             </div>          
             <button type="submit" class="btn btn-primary">Register</button>
-          </form>
+          </form>-->
+        
+    <form action="" method='POST' class="form-register" style="color: black;">  
+      {{ form.hidden_tag() }}    
+      {{ form.username(class="form-control", placeholder="User Name") }}
+      <br>
+      {{ form.email_adress(class="form-control", placeholder="Email Address") }}
+      <br>
+      {{ form.password1(class="form-control", placeholder="Password") }}
+      <br>
+      {{ form.password2(class="form-control", placeholder="Confirm Password") }}
+      <br>
+      {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+    </form>   
             
     </p>
   </div>

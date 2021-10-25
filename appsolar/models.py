@@ -1,6 +1,4 @@
 from appsolar import db
-from flask_wtf import FlaskForm
-from wtforms import StringField
 
 class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)

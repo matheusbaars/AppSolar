@@ -1,6 +1,7 @@
 from sqlalchemy.orm.base import MANYTOONE
 from appsolar import app
-from flask import render_template, url_for, request, url_for, flash, redirect, jsonify
+from flask import render_template, url_for, request, url_for, flash, redirect, get_flashed_messages
+from appsolar.forms import RegisterForm
 from appsolar.models import Client, Module, User, Irradiacao
 from appsolar import db
 from appsolar.functions import *
@@ -12,9 +13,20 @@ def landing_page():
     return render_template('landing.html')
 
 ####################CLIENTS########################
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user_to_create = User(username=form.username.data,
+                              email_adress = form.email_adress.data,
+                              password_hash = form.password1.data)
+        db.session.add(user_to_create)
+        db.session.commit()
+        return redirect(url_for('clients'))
+    if form.errors != {}: #if there are not errors from the validations
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+    return render_template('register.html', form=form)
 
 @app.route('/clients')
 def clients():
