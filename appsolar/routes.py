@@ -222,3 +222,8 @@ def deleteirradiation(id):
     return redirect(url_for('irradiation'))
 ####################IRRADIAÇÃO#####################
 
+####################SERVICES#####################
+@app.route('/services')
+def services():
+    return render_template('services.html')
+####################SERVICES#####################
