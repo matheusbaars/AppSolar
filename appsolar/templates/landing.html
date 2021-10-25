@@ -18,7 +18,7 @@ Home
                      <h4 class="modal-title">Login</h4>
                   </div>
                   <div class="modal-body">
-                     <form action="" method="POST"> 
+                     <!--<form action="" method="POST"> 
                         <div class="form-group">
                            <label>Username:</label>
                            <input type="text" class="form-control" name="username" required="1">
@@ -33,7 +33,22 @@ Home
                         <div class="form-group">
                           <a href="{{ url_for('register') }}">Not a user? Register here</a> 
                        </div>
-                     </form> 
+                     </form> -->
+               <form action="" method="post" class="form-signin" style="color: white;">
+                  {{ form.hidden_tag() }}
+                  {{ form.username(class="form-control", placeholder="Username") }}
+                  <br>
+                  {{ form.password(class="form-control", placeholder="Password") }}
+                  <br>
+                  {{ form.submit(class="btn btn-primary") }}
+                  <br>
+                  <div class="checkbox mb-3">
+                     <br>
+                     <h6>Do not have an account?</h6>
+                     <a class="btn btn-sm btn-secondary" href="{{ url_for('register') }}">Register here</a>
+                  </div>
+                 
+               </form>
                 </div>
                 <div class="modal-footer"> 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
