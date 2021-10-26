@@ -5,12 +5,21 @@ from appsolar.forms import RegisterForm, LoginForm
 from appsolar.models import Client, Module, User, Irradiacao
 from appsolar import db
 from appsolar.functions import *
+from flask_login import login_user
 
-
-@app.route('/')
-@app.route('/home')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def landing_page():
     form = LoginForm()
+    if form.validate_on_submit():
+        attempted_user = User.query.filter_by(username=form.username.data).first()
+        print('dfsdfgsdfdsfdsfsdf: ' + form.password.data)     
+        if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):            
+            login_user(attempted_user)
+            flash(f'Success! You are logged in as {attempted_user.username}', category='success')
+            return redirect(url_for('services'))
+        else:
+            flash(f'Username and password are not match! Please try again', category='danger')
     return render_template('landing.html', form=form)
 
 ####################CLIENTS########################
@@ -28,10 +37,6 @@ def register():
         for err_msg in form.errors.values():
             flash(f'There was an error with creating a user: {err_msg}', category='danger')
     return render_template('register.html', form=form)
-
-@app.route('/login', methods=['GTE', 'POST'])
-#def login_page
-
 
 @app.route('/clients')
 def clients():
