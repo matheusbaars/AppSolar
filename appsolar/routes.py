@@ -115,6 +115,7 @@ def simplecalculate():
     custodisponibilidade = request.form['custodisponibilidade']
     module_data = request.form['modules']
     irradiation_data = request.form['irradiation']
+    losses = request.form['losses']
     #for key, value in request.form.items():
     #    print("key: {0}, value: {1}".format(key, value))
     id = module_data[-1]
@@ -126,9 +127,8 @@ def simplecalculate():
     net_energy_per_day = net_energy / 30
     power_peak = net_energy_per_day / float(irradiation_data.irr_media)
     number_modules = power_peak * 1000 / float(module_data.pmax)
-    #return f'Peak power = {power_peak}kWp | {number_modules} modules.'
-    return render_template('results_simple_calculator.html', number_modules=number_modules, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak, module_data=module_data, irradiation_data=irradiation_data)
-    #return render_template('simpleCalculator.html', number_modules=number_modules, pmax=module_data.pmax, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak)
+    energy_produced_no_loss =  power_peak * float(irradiation_data.irr_media) * 30 * (1 - (float(losses) / 100))
+    return render_template('results_simple_calculator.html', number_modules=number_modules, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak, module_data=module_data, irradiation_data=irradiation_data, energy=energy_produced_no_loss)    
 ####################Simple Calculator##############
 
 ####################MODULES########################
