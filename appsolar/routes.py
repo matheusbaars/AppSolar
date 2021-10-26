@@ -5,7 +5,7 @@ from appsolar.forms import RegisterForm, LoginForm
 from appsolar.models import Client, Module, User, Irradiacao
 from appsolar import db
 from appsolar.functions import *
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, login_required
 
 
 ####################LOGIN########################
@@ -14,8 +14,7 @@ from flask_login import login_user, logout_user
 def landing_page():
     form = LoginForm()
     if form.validate_on_submit():
-        attempted_user = User.query.filter_by(username=form.username.data).first()
-        print('dfsdfgsdfdsfdsfsdf: ' + form.password.data)     
+        attempted_user = User.query.filter_by(username=form.username.data).first()             
         if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):            
             login_user(attempted_user)
             flash(f'Success! You are logged in as {attempted_user.username}', category='success')
@@ -43,6 +42,9 @@ def register():
                               password = form.password1.data)
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
+        flash(f'Account created successfully. You are logged in as {user_to_create.username}', category='success')
+
         return redirect(url_for('services'))
     if form.errors != {}: #if there are not errors from the validations
         for err_msg in form.errors.values():
@@ -50,11 +52,13 @@ def register():
     return render_template('register.html', form=form)
 
 @app.route('/clients')
+@login_required
 def clients():
     clients = Client.query.all()
     return render_template('clients.html', clients=clients)
 
 @app.route('/insert', methods=['POST'])
+@login_required
 def insert():
     if request.method == 'POST':
         name = request.form['name']
@@ -71,6 +75,7 @@ def insert():
     return render_template('clients.html')
 
 @app.route('/delete/<id>', methods=['GET', 'POST'])
+@login_required
 def delete(id):
     client = Client.query.get(id)
     db.session.delete(client)
@@ -79,6 +84,7 @@ def delete(id):
     return redirect(url_for('clients'))
 
 @app.route('/update', methods=['GET', 'POST'])
+@login_required
 def update():
     
     if request.method == 'POST':
@@ -96,12 +102,14 @@ def update():
 
 ####################Simple Calculator##############
 @app.route('/simplecalculator')
+@login_required
 def simple_calculator():
     modules = Module.query.all()
     irradiations = Irradiacao.query.all()
     return render_template('simpleCalculator.html',  irradiations=irradiations, modules=modules)
 
 @app.route('/simplecalculate', methods=['GET', 'POST'])
+@login_required
 def simplecalculate():
     meanconsume = request.form['meanconsume']
     custodisponibilidade = request.form['custodisponibilidade']
@@ -125,11 +133,13 @@ def simplecalculate():
 
 ####################MODULES########################
 @app.route('/modules')
+@login_required
 def modules():
     modules = Module.query.all()
     return render_template('modules.html', modules=modules)
 
 @app.route('/insertmodules', methods=['POST'])
+@login_required
 def insertmodules():
     if request.method == 'POST':
         manufacture = request.form['manufacture']
@@ -152,6 +162,7 @@ def insertmodules():
     return render_template('modules.html')
 
 @app.route('/deletemodule/<id>')
+@login_required
 def deletemodule(id):
     module = Module.query.get(id)
     db.session.delete(module)
@@ -160,6 +171,7 @@ def deletemodule(id):
     return redirect(url_for('modules'))
 
 @app.route('/updatemodule', methods=['GET', 'POST'])
+@login_required
 def updatemodule():    
     if request.method == 'POST':
         data = Module.query.get(request.form.get('id'))
@@ -181,11 +193,13 @@ def updatemodule():
 
 ####################IRRADIAÇÃO#####################
 @app.route('/irradiation')
+@login_required
 def irradiation():
     irradiations = Irradiacao.query.all()
     return render_template('irradiation.html', irradiations=irradiations)
 
 @app.route('/insertcityirradiation', methods=['POST'])
+@login_required
 def insertcityirradiation():
     if request.method == 'POST':
         city = request.form['irr-city']
@@ -211,6 +225,7 @@ def insertcityirradiation():
     return render_template('irradiation.html')
 
 @app.route('/updateirradiation', methods=['GET', 'POST'])
+@login_required
 def updateirradiation():
     if request.method == 'POST':
         data = Irradiacao.query.get(request.form.get('id'))
@@ -235,6 +250,7 @@ def updateirradiation():
     return render_template('irradiation.html')
 
 @app.route('/deleteirradiation/<id>')
+@login_required
 def deleteirradiation(id):
     irradiation = Irradiacao.query.get(id)
     db.session.delete(irradiation)
@@ -245,6 +261,7 @@ def deleteirradiation(id):
 
 ####################SERVICES#####################
 @app.route('/services')
+@login_required
 def services():
     return render_template('services.html')
 ####################SERVICES#####################
