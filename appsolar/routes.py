@@ -5,8 +5,10 @@ from appsolar.forms import RegisterForm, LoginForm
 from appsolar.models import Client, Module, User, Irradiacao
 from appsolar import db
 from appsolar.functions import *
-from flask_login import login_user
+from flask_login import login_user, logout_user
 
+
+####################LOGIN########################
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 def landing_page():
@@ -21,6 +23,15 @@ def landing_page():
         else:
             flash(f'Username and password are not match! Please try again', category='danger')
     return render_template('landing.html', form=form)
+####################LOGIN########################
+
+####################LOGOUT########################
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash('You have been logged out!', category='info')
+    return redirect(url_for('landing_page'))
+####################LOGOUT########################
 
 ####################CLIENTS########################
 @app.route('/register', methods=['GET', 'POST'])
