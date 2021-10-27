@@ -19,5 +19,15 @@ def monthlyEnergyConsumedLessCostDisponibility(energy, costOfDisponibility):
 def number_of_modules(net_energy_per_day, modulePower):
     pass
 
+def typeOfMounting(type):
+    if type == 'standard rail system':
+        return 29
+    elif type == 'ballasted system':
+        return 28
+    elif type == 'non-penetrating system':
+        return 32
+    elif type == 'Elevated structure':
+        return 22
+    
 
 

@@ -101,4 +101,37 @@ class Irradiacao(db.Model):
         self.irr_novembro = irr_novembro
         self.irr_dezembro = irr_dezembro
         self.irr_media = irr_media
+
+class Temperature(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    temp_cidade = db.Column(db.String(length=50),nullable=False, unique=True)
+    temp_janeiro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_fevereiro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_março = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_abril = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_maio = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_junho = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_julho = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_agosto = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_setembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_outubro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_novembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_dezembro = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+    temp_media = db.Column(db.Float(precision=2, asdecimal=True), nullable=False)
+
+    def __init__(self, temp_cidade, temp_janeiro, temp_fevereiro, temp_março, temp_abril, temp_maio, temp_junho, temp_julho, temp_agosto, temp_setembro, temp_outubro, temp_novembro, temp_dezembro, temp_media):
+        self.temp_cidade = temp_cidade
+        self.temp_janeiro = temp_janeiro
+        self.temp_fevereiro = temp_fevereiro
+        self.temp_março = temp_março
+        self.temp_abril = temp_abril
+        self.temp_maio = temp_maio
+        self.temp_junho = temp_junho
+        self.temp_julho = temp_julho
+        self.temp_agosto = temp_agosto
+        self.temp_setembro = temp_setembro
+        self.temp_outubro = temp_outubro
+        self.temp_novembro = temp_novembro
+        self.temp_dezembro = temp_dezembro
+        self.temp_media = temp_media
         

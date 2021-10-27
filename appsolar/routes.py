@@ -2,7 +2,7 @@ from sqlalchemy.orm.base import MANYTOONE
 from appsolar import app
 from flask import render_template, url_for, request, url_for, flash, redirect, get_flashed_messages
 from appsolar.forms import RegisterForm, LoginForm
-from appsolar.models import Client, Module, User, Irradiacao
+from appsolar.models import Client, Module, User, Irradiacao, Temperature
 from appsolar import db
 from appsolar.functions import *
 from flask_login import login_user, logout_user, login_required
@@ -115,9 +115,7 @@ def simplecalculate():
     custodisponibilidade = request.form['custodisponibilidade']
     module_data = request.form['modules']
     irradiation_data = request.form['irradiation']
-    losses = request.form['losses']
-    #for key, value in request.form.items():
-    #    print("key: {0}, value: {1}".format(key, value))
+    losses = request.form['losses']    
     id = module_data[-1]
     id_irr = irradiation_data[-1]    
     module_data = Module.query.filter_by(id=id).first()
@@ -130,6 +128,27 @@ def simplecalculate():
     energy_produced_no_loss =  power_peak * float(irradiation_data.irr_media) * 30 * (1 - (float(losses) / 100))
     return render_template('results_simple_calculator.html', number_modules=number_modules, custodisponibilidade=custodisponibilidade, meanconsume=meanconsume, power_peak=power_peak, module_data=module_data, irradiation_data=irradiation_data, energy=energy_produced_no_loss)    
 ####################Simple Calculator##############
+
+####################Complete Calculator##############
+@app.route('/completecalculator')
+@login_required
+def complete_calculator():
+    modules = Module.query.all()
+    irradiations = Irradiacao.query.all()
+    temperatures = Temperature.query.all()
+    return render_template('complete_calculator.html',  irradiations=irradiations, modules=modules, temperatures=temperatures)
+
+@app.route('/completecalculate', methods=['GET', 'POST'])
+def completeCalculate():
+    meanconsume = request.form['meanconsume']
+    custodisponibilidade = request.form['custodisponibilidade']
+    module_data = Module.query.filter_by(id=request.form['modules'][-1]) 
+    irradiation_data = Irradiacao.query.filter_by(id=request.form['irradiation'][-1]).first()     
+    mount_type = typeOfMounting(request.form['typeofroof'])
+    temperature_data = Temperature.query.filter_by(id=request.form['temperature'][-1]).first()
+    
+    return render_template('results_complete_calculator.html')
+####################Complete Calculator##############
 
 ####################MODULES########################
 @app.route('/modules')
@@ -265,3 +284,71 @@ def deleteirradiation(id):
 def services():
     return render_template('services.html')
 ####################SERVICES#####################
+
+####################TEMPERATURE#####################
+@app.route('/temperature')
+@login_required
+def temperature():
+    temperatures = Temperature.query.all()
+    return render_template('temperature.html', temperatures=temperatures)
+
+@app.route('/insertcitytemperature', methods=['POST'])
+@login_required
+def insertcitytemperature():
+    if request.method == 'POST':
+        city = request.form['temp-city']
+        january = request.form['temp-january']
+        february = request.form['temp-february']
+        march = request.form['temp-march']
+        april = request.form['temp-april']
+        may = request.form['temp-may']
+        june = request.form['temp-june']
+        july = request.form['temp-july']
+        august = request.form['temp-august']
+        september = request.form['temp-september']
+        october = request.form['temp-october']
+        november = request.form['temp-november']
+        december = request.form['temp-december']
+        mean = request.form['temp-mean']
+
+        data = Temperature(city, january, february, march, april, may, june, july, august, september, october, november, december, mean)
+        db.session.add(data)
+        db.session.commit()
+        flash('City temperature added successfully')
+        return redirect(url_for('temperature'))
+    return render_template('temperature.html')
+
+@app.route('/updatetemperature', methods=['GET', 'POST'])
+@login_required
+def updatetemperature():
+    if request.method == 'POST':
+        data = Temperature.query.get(request.form.get('id'))
+        data.temp_cidade = request.form['temp-city']
+        data.temp_janeiro = request.form['temp-january']
+        data.temp_fevereiro = request.form['temp-february']
+        data.temp_março = request.form['temp-march']
+        data.temp_abril = request.form['temp-april']
+        data.temp_maio= request.form['temp-may']
+        data.temp_junho= request.form['temp-june']
+        data.temp_julho = request.form['temp-july']
+        data.temp_agosto = request.form['temp-august']
+        data.temp_setembro = request.form['temp-september']
+        data.temp_outubro = request.form['temp-october']
+        data.temp_novembro = request.form['temp-november']
+        data.temp_dezembro = request.form['temp-december']
+        data.temp_media = request.form['temp-mean'] 
+
+        db.session.commit()
+        flash('City temperature update successfully')
+        return redirect(url_for('temperature'))
+    return render_template('temperature.html')
+
+@app.route('/deletetemperature/<id>')
+@login_required
+def deletetemperature(id):
+    temperature = Temperature.query.get(id)
+    db.session.delete(temperature)
+    db.session.commit()
+    flash('City temperature deleted successfully')
+    return redirect(url_for('temperature'))
+####################TEMPERATURE#####################
